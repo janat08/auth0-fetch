@@ -1,9 +1,9 @@
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
+// import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 
 //import { authorize as makeAuth, logout, handleRedirect, cookieKey } from './auth0'
 import { globals, cookieKey } from './auth0'
-
-import { hydrateState } from './edge_state'
+import {Session, State} from './durables.js'
+export {Session, State}
 import cookie from 'cookie'
 
 // see the readme for more info on what these config options do!

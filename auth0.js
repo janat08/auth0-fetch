@@ -4,17 +4,16 @@ import { proxyDurable } from 'itty-durable'
 export const cookieKey = 'AUTH0-AUTH'
 
 export function globals({kv, MODE, ...env}, request2){
-  console.log(kv.put)
 const {SESSION, STATE} = env
 const SEDO = proxyDurable(SESSION)
 const STDO = proxyDurable(STATE)
 const AUTH_STORE = kv
-const devBase = MODE == 'test'? "http://127.0.0.1:8787": "https://8787-gray-cricket-k6tm2kdk.ws-eu27.gitpod.io"
-const callbackBase = MODE != 'production'? devBase : 'https://ownthe.email'
+const devBase = ENV.AUTHREDIRECT
+const callbackBase = MODE != 'production'? devBase : env.AUTHREDIRECTPRODUCTION
 const auth0 = {
-  domain: "domainsjk.eu.auth0.com",
-  clientId: env.OAUTH0ID,
-  clientSecret: env.OAUTH0SECRET,
+  domain: env.AUTH0DOMAIN,
+  clientId: env.AUTH0ID,
+  clientSecret: env.AUTH0SECRET,
   callbackUrl: callbackBase + "/auth",
 }
 
