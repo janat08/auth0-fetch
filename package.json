@@ -5,7 +5,8 @@
     "type": "module",
     "module": "./dist/index.mjs",
     "scripts": {
-      "build": "esbuild --bundle --sourcemap --format=esm --outfile=dist/index.mjs ./index.js"
+      "build": "esbuild --bundle --sourcemap --format=esm --outfile=dist/index.mjs ./index.js",
+      "publish": "git add . && git commit -m 'sdf' && git push && npm publish"
     },
     "dependencies": {
       "cookie": "^0.4.1",
