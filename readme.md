@@ -2,6 +2,8 @@
 
 Based on work from cf worker guide with some fixes that make it more production worthy: https://developers.cloudflare.com/workers/tutorials/authorize-users-with-auth0
 
+  - [Bugfixes:](#bugfixes)
+  - [Bugs:](#bugs)
 - [Fetch based library for cloudflare workers with sessions based on durable objects (which requires premium subscription.)](#fetch-based-library-for-cloudflare-workers-with-sessions-based-on-durable-objects-which-requires-premium-subscription)
   - [Bugfixes:](#bugfixes)
   - [Bugs:](#bugs)
