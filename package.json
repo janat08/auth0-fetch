@@ -1,7 +1,7 @@
 {
     "name": "auth0-fetch",
     "description": "auth0 library for cloudflare's durable objects and workers with sessions",
-    "keywords": ["cloudflare", "worker", "auth0", "cfw", "durable objects", "DO"],
+    "keywords": ["cloudflare", "worker", "auth0", "cfw", "durable objects", "DO", "fetch", "authenticaiton"],
     "type": "module",
     "module": "./dist/index.mjs",
     "scripts": {
