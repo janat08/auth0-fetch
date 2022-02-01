@@ -4,9 +4,6 @@ Based on work from cf worker guide with some fixes that make it more production 
 
   - [Bugfixes:](#bugfixes)
   - [Bugs:](#bugs)
-- [Fetch based library for cloudflare workers with sessions based on durable objects (which requires premium subscription.)](#fetch-based-library-for-cloudflare-workers-with-sessions-based-on-durable-objects-which-requires-premium-subscription)
-  - [Bugfixes:](#bugfixes)
-  - [Bugs:](#bugs)
 - [Instructions:](#instructions)
   - [1. Have these variables in second argument passed into authorization:](#1-have-these-variables-in-second-argument-passed-into-authorization)
   - [2. In index.js:](#2-in-indexjs)
