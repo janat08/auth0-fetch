@@ -1,3 +1,7 @@
+<a href="https://www.paypal.me/janat08">
+  <img height="32" src="https://github.com/everdrone/coolbadge/blob/master/badges/Paypal/Beer/Dark/Big.png" />
+</a>
+
 ## Fetch based library for cloudflare workers with sessions based on durable objects (which requires premium subscription.)
 
 Based on work from cf worker guide with some fixes that make it more production worthy: https://developers.cloudflare.com/workers/tutorials/authorize-users-with-auth0
