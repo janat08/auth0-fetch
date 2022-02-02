@@ -24,7 +24,7 @@
       "type": "paypal",
       "url": "https://www.paypal.me/janat08"
     },
-    "version": "0.0.3",
+    "version": "0.0.4",
     "license" : "ISC",
       "repository": {
         "type": "git",

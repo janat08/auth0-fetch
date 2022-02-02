@@ -64,17 +64,7 @@ durable_objects.bindings = [
 ````js
 API.get('/login', async (req, env)=>{
   const auth = await authorize(req,env) 
-  
-  if (auth.authorized === true ){
-    return seeOther('/')
-  }
-  
-  if (auth instanceof Response){
-    return auth
-  } else {
-    return seeOther('/')
-  }
-   
+  return auth  
 })
 //necessery route for autho0 hook, you don't have this a login doesn't work
 API.get('/auth', async (req,env)=>{
@@ -88,10 +78,11 @@ API.get('/logout', async (r,e)=>{
 ### 5. Verifying user is logged in
 ````js
 import { authorizedCookie, authorize, authorized } from '../auth/index.js'
-await authorizedCookie(environmentVariablesFromStepOne) //Returns boolean that just checks if browser sent a session cookie
-  
-  const auth = await authorize(req,env) //sends a respones if user isn't logged in, otherwise user data, check
+//Returns boolean that just checks if browser sent a session cookie
+await authorizedCookie(environmentVariablesFromStepOne) 
 
+//sends a respones if user isn't logged in, otherwise user data, check 
+  const auth = await authorize(req,env) 
   if (auth.authorized === true ){
     //do your stuff
   }
@@ -102,5 +93,8 @@ await authorizedCookie(environmentVariablesFromStepOne) //Returns boolean that j
     //do your stuff
   }
 
-await authorized(req, env) //checks against auth0 session store if user is logged in, if not returns object {authorized: false}, rather then a response to login with auth0 like authorize function does
+//checks against auth0 session store if user is logged in, if not 
+//returns object {authorized: false}, rather then a response to 
+//login with auth0 like authorize function does
+await authorized(req, env) 
 ````
