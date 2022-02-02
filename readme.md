@@ -6,10 +6,12 @@
 
 Based on work from cf worker guide with some fixes that make it more production worthy: https://developers.cloudflare.com/workers/tutorials/authorize-users-with-auth0
 
+
   - [Bugfixes:](#bugfixes)
   - [Bugs:](#bugs)
 - [Instructions:](#instructions)
   - [1. Have these variables in second argument passed into authorization:](#1-have-these-variables-in-second-argument-passed-into-authorization)
+    - [1.1 Configure auth0 following the blog:](#11-configure-auth0-following-the-blog)
   - [2. In index.js:](#2-in-indexjs)
   - [3. in wrangler.toml that is configured to use esmodules (exports fetch function and doesn't handle event with a callback)](#3-in-wranglertoml-that-is-configured-to-use-esmodules-exports-fetch-function-and-doesnt-handle-event-with-a-callback)
   - [4. Basic Usage, auth route is a necessary hook](#4-basic-usage-auth-route-is-a-necessary-hook)
@@ -38,6 +40,9 @@ They can be configured with wrangler.toml as environment variables and secrets
 - AUTH0DOMAIN = your-tenant.region.auth0.com
 - AUTHREDIRECT = 'http://127.0.0.1:8787'
 - AUTHREDIRECTPRODUCTION = your.domain.com
+  
+#### 1.1 Configure auth0 following the blog:
+Mainly you have to set /auth path as hook for auth0 redirect for code based authentication flow. You also need to set allowed logout url, since unlike in the tutorial you'll be logging out of auth0 sessions. The tutorial link is at the top of this readme.
 
 ### 2. In index.js:
 ````js
