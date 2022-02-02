@@ -17,8 +17,9 @@ Based on work from cf worker guide with some fixes that make it more production 
 
 ### Bugfixes:
 - fixes exchange codes getting stored in session per user, rather then kv globally
-- Stores sessions, but doesn't store userID within it
-- Redirects user back to original location after verifying logged in status (which is just logging in, so not advised as it introduces extra lag)
+- Stores sessions in durable object, but doesn't store userID within it
+- Redirects user back to original location after verifying logged in status (which is just logging in, so not advised as it introduces extra lag- no session checking)
+- Logs out from auth0 session too
 
 ### Bugs:
 - Doesn't ever delete any of code/session durable objects while hopefully consuming the storage
@@ -34,9 +35,9 @@ They can be configured with wrangler.toml as environment variables and secrets
 - MODE if 'test' returns a stub for user (always logged in), if not production returns dev redirect (localhost)
 - SALT https://csprng.xyz/v1/api or read the blog above
 - AUTH0ID
-- AUTH0DOMAIN 
+- AUTH0DOMAIN = your-tenant.region.auth0.com
 - AUTHREDIRECT = 'http://127.0.0.1:8787'
-- AUTHREDIRECTPRODUCTION 
+- AUTHREDIRECTPRODUCTION = your.domain.com
 
 ### 2. In index.js:
 ````js
