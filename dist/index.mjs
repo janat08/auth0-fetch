@@ -453,7 +453,7 @@ function globals({ kv, MODE, ...env }, request2) {
   const SEDO = (0, import_itty_durable.proxyDurable)(SESSION);
   const STDO = (0, import_itty_durable.proxyDurable)(STATE);
   const AUTH_STORE = kv;
-  const devBase = ENV.AUTHREDIRECT;
+  const devBase = env.AUTHREDIRECT;
   const callbackBase = MODE != "production" ? devBase : env.AUTHREDIRECTPRODUCTION;
   const auth0 = {
     domain: env.AUTH0DOMAIN,

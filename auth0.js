@@ -8,7 +8,7 @@ const {SESSION, STATE} = env
 const SEDO = proxyDurable(SESSION)
 const STDO = proxyDurable(STATE)
 const AUTH_STORE = kv
-const devBase = ENV.AUTHREDIRECT
+const devBase = env.AUTHREDIRECT
 const callbackBase = MODE != 'production'? devBase : env.AUTHREDIRECTPRODUCTION
 const auth0 = {
   domain: env.AUTH0DOMAIN,

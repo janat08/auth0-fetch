@@ -23,7 +23,7 @@ export function authorizedCookie(event){
   return false
 }
 
-//point of this is to have a function that doesnt demand user be logged in, unlike for navbar profile button for example
+//point of this is to have a function  that doesnt demand user be logged in, unlike for navbar profile button for example
 export function authorized(event, env){
   return authorize(event, env, true)
 }

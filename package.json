@@ -6,6 +6,7 @@
     "module": "./dist/index.mjs",
     "scripts": {
       "build": "esbuild --bundle --sourcemap --format=esm --outfile=dist/index.mjs ./index.js",
+      "watch": "esbuild --watch --bundle --sourcemap --format=esm --outfile=dist/index.mjs ./index.js",
       "publish": "git add . && git commit -m 'sdf' && git push && npm publish"
     },
     "dependencies": {
@@ -24,7 +25,7 @@
       "type": "paypal",
       "url": "https://www.paypal.me/janat08"
     },
-    "version": "0.0.4",
+    "version": "0.0.5",
     "license" : "ISC",
       "repository": {
         "type": "git",
