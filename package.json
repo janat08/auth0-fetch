@@ -7,7 +7,7 @@
     "scripts": {
       "build": "esbuild --bundle --sourcemap --format=esm --outfile=dist/index.mjs ./index.js",
       "watch": "esbuild --watch --bundle --sourcemap --format=esm --outfile=dist/index.mjs ./index.js",
-      "publish": "git add . && git commit -m 'sdf' && git push && npm publish"
+      "publish": "git add . && git commit -m 'fixed do' && git push --force && npm publish"
     },
     "dependencies": {
       "cookie": "^0.4.1",

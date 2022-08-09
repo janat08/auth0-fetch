@@ -4,7 +4,7 @@
 
 ## Fetch based library for cloudflare workers with sessions based on durable objects (which requires premium subscription.)
 
-Based on work from cf worker guide with some fixes that make it more production worthy: https://developers.cloudflare.com/workers/tutorials/authorize-users-with-auth0
+Based on work from cf worker guide with some fixes that make it more production worthy: https://developers.cloudflare.com/workers/tutorials/authorize-users-with-auth0 https://github.com/neilmock/workers-auth0-example/
 
 
   - [Bugfixes:](#bugfixes)
