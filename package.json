@@ -1,0 +1,37 @@
+{
+    "name": "auth0-fetch",
+    "description": "auth0 library for cloudflare's durable objects and workers with sessions",
+    "keywords": ["cloudflare", "worker", "auth0", "cfw", "durable objects", "DO", "fetch", "authentication"],
+    "type": "module",
+    "module": "./dist/index.mjs",
+    "scripts": {
+      "build": "esbuild --bundle --sourcemap --format=esm --outfile=dist/index.mjs ./index.js",
+      "watch": "esbuild --watch --bundle --sourcemap --format=esm --outfile=dist/index.mjs ./index.js",
+      "publish": "npm adduser && npm publish",
+      "push": "git init && git remote add origin https://github.com/janat08/auth0-fetch.git && git add . && git commit -m 'fixed do' && git push --force --set-upstream origin master"
+    },
+    "dependencies": {
+      "cookie": "^0.4.1",
+      "itty-durable": "^0.4.0"
+    },
+    "devDependencies": {
+       "esbuild": "^0.13.15",
+      "esbuild-config": "^0.2.0",
+      "esbuild-plugin-postcss2": "^0.1.1",
+      "esbuild-plugin-stimulus": "^0.1.2",
+      "esbuild-serve": "^1.0.1",
+      "miniflare": "^2.1.0"
+    },
+    "funding": {
+      "type": "paypal",
+      "url": "https://www.paypal.me/janat08"
+    },
+    "version": "0.0.8",
+    "license" : "ISC",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/janat08/auth0-fetch.git"
+      },
+      "homepage": "https://github.com/janat08/auth0-fetch#readme"
+  }
+  
