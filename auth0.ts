@@ -1,7 +1,5 @@
 import cookie from 'cookie'
-import {jwtVerify, flattenedVerify, generalVerify} from 'jose'
 import {TokenResponse} from 'auth0'
-import {SESSIONInterface} from './durables'
 export const cookieKey = 'AUTH0-AUTH'
 
 const {log} = console
@@ -63,7 +61,7 @@ const exchangeCode = async (code: string) => {
 
 // https://github.com/pose/webcrypto-jwt/blob/master/index.js
 const decodeJWT = function(token: string) {
-  var output = token
+  let output = token
     .split('.')[1]
     .replace(/-/g, '+')
     .replace(/_/g, '/')
@@ -178,7 +176,7 @@ const persistAuth = async (exchange: Response) => {
   
   const cookieHeader = request2.headers.get('Cookie') || ''
     const cookies = cookie.parse(cookieHeader)
-    let path = cookies['loginRedirect'] || '/'
+    const path = cookies['loginRedirect'] || '/'
     //endOfLife value is determined by auth0 session rules so that they're in sync
     log('setting cookie')
     const headers = {

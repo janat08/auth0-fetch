@@ -1,9 +1,8 @@
-import { createDurable } from 'itty-durable'
 import { Hono } from 'hono'
-import {c} from 'auth0'
 import {TokenResponse} from 'auth0'
 
 const {log} = console
+
 interface SESSIONInterface {
   session: TokenResponse | null
   created: boolean
@@ -17,7 +16,7 @@ type SESSIONRead = Pick<SESSIONInterface, 'session' | 'created' | 'createdDate'>
 
 
 export class State {
-  created: boolean = false
+  created = false
   state: DurableObjectState
   app: Hono = new Hono()
 
@@ -32,7 +31,7 @@ export class State {
     this.app.get('/created', async (c) => {
       this.created = true
       await this.state.storage?.put('created', this.created)
-      var dt = new Date();
+      const dt = new Date();
       dt.setDate(dt.getDate() + 1);
       this.state.storage.setAlarm(dt)
 
@@ -119,7 +118,7 @@ export class Session implements SESSIONInterface  {
   //auth0 has point at which extendion session is impossible
   extension(c){
     const days = 24*60
-    var extension = new Date();
+    const extension = new Date();
     const exp = c.env.AUTH0EXPIRY*1
     const relo = c.env.AUTH0MANDATORYRELOG*1
     if(exp== 0 || relo==0 || isNaN(relo) || isNaN(exp)){
