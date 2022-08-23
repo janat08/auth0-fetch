@@ -1,6 +1,21 @@
 import { createDurable } from 'itty-durable'
 import { Hono } from 'hono'
+import {c} from 'auth0'
+import {TokenResponse} from 'auth0'
+
 const {log} = console
+interface SESSIONInterface {
+  session: TokenResponse | null
+  created: boolean
+  createdDate: Date
+  endOfLife: number 
+  state: DurableObjectState
+  app: Hono
+}
+
+type SESSIONRead = Pick<SESSIONInterface, 'session' | 'created'>)
+
+
 export class State {
   created: boolean = false
   state: DurableObjectState
@@ -38,14 +53,14 @@ export class State {
     await this.state.storage.deleteAll()
   }
 }
-4320
-export class Session  {
-  session: any = null
-  created: boolean = false
-  createdDate: Date = new Date()
-  endOfLife: number = 360*24*60*60 + new Date().getTime()
-  state: DurableObjectState
-  app: Hono = new Hono()
+
+export class Session implements SESSIONInterface  {
+  session = null
+  created = false
+  createdDate = new Date()
+  endOfLife = 360*24*60*60 + new Date().getTime()
+  state
+  app = new Hono()
 
   constructor(state: DurableObjectState) {
     this.state = state
@@ -63,7 +78,7 @@ export class Session  {
     })
 
     this.app.post('/', async (c) => {
-      const body = await c.req.parseBody()
+      const body: TokenResponse = await c.req.parseBody()
       if (this.created == false){
         this.created = true
         await this.state.storage?.put('created', this.created)
@@ -75,7 +90,8 @@ export class Session  {
       this.state.storage?.put('session', body)
       this.session = body
       console.log('recieved', body)
-      return c.json({createdDate: this.createdDate, session: this.session})
+      const response: SESSIONRead = {createdDate: this.createdDate, session: this.session}
+      return c.json(response)
     })
     this.app.get('/', async (c) => {
       const ok = this.extension(c)
