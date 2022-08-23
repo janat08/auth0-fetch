@@ -12,7 +12,7 @@ const config = {
   hydrateState: false,
   // return responses at the edge
   originless: false,
-} 
+}
 
 export function authorizedCookie(event){
   const cookieHeader = event.headers.get('Cookie')

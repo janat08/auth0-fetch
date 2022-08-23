@@ -1,14 +1,12 @@
 import cookie from 'cookie'
-
-import { proxyDurable } from 'itty-durable'
+import {jwtVerify, flattenedVerify, generalVerify} from 'jose'
 export const cookieKey = 'AUTH0-AUTH'
 
 const {log} = console
 
 export function globals({kv, MODE, ...env}, request2){
-const {SESSION, STATE} = env
+const {SESSION, STATE, AUTH0RS256SIGNATURE} = env
 
-const AUTH_STORE = kv
 const devBase = env.AUTHREDIRECT
 const callbackBase = MODE != 'production'? devBase : env.AUTHREDIRECTPRODUCTION
 const auth0 = {
@@ -35,6 +33,9 @@ const exchangeCode = async code => {
     code,
     redirect_uri: auth0.callbackUrl,
   })
+  if(!auth0.clientId || !auth0.clientSecret ||  !auth0.callbackUrl){
+    throw new Error('auth0 client or secret undefined')
+  }
   const res = await fetch(AUTH0_DOMAIN + '/oauth/token', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -116,18 +117,35 @@ const validateToken = token => {
 
 const persistAuth = async exchange => {
   const body = await exchange.json()
-
   if (body.error) {
-    console.log('err', body, exchange)
+    console.log('err body', body)
     throw new Error(body.error)
   }
+  log(body)
+  //https://github.com/panva/jose/blob/664279d468a508635c55c2c466a207790ce13ed7/docs/interfaces/jwt_verify.JWTVerifyOptions.md
+  const validationOptions = {
 
+  }
+  // const { payload, protectedHeader } = await jwtVerify(atob(body.access_token), AUTH0RS256SIGNATURE)
+  // const { payload: decoded } = await jwtVerify(atob(body.id_token), AUTH0RS256SIGNATURE)
+  // const { payload, protectedHeader } = await flattenedVerify(body.access_token, AUTH0RS256SIGNATURE)
+  // const { payload: decoded } = await flattenedVerify(body.id_token, AUTH0RS256SIGNATURE)
+  //  const { payload, protectedHeader } = await generalVerify(body.access_token, AUTH0RS256SIGNATURE)
+  //  const { payload: decoded } = await generalVerify(body.id_token, AUTH0RS256SIGNATURE)
+  
+  
   const decoded = JSON.parse(decodeJWT(body.id_token))
+  
   const validToken = validateToken(decoded)
   if (!validToken) {
     return { status: 401 }
   }
-
+  // log('decoded', decoded, payload)
+  log(body.access_token)
+  // log('access decoded', body.access_token, decodeJWT(body.access_token)+"", JSON.parse(decodeJWT(body.access_token)))
+  if (!env.SALT){
+    throw new Error('SALT undefined for auth0')
+  }
   const text = new TextEncoder().encode(`${env.SALT}-${decoded.sub}`)
   const digest = await crypto.subtle.digest({ name: 'SHA-256' }, text)
   const digestArray = new Uint8Array(digest)
@@ -147,10 +165,11 @@ const persistAuth = async exchange => {
     const cookies = cookie.parse(cookieHeader)
     let path = cookies['loginRedirect'] || '/'
     //endOfLife value is determined by auth0 session rules so that they're in sync
-  const headers = {
+    log('setting cookie')
+    const headers = {
     Location: path,
     'Set-cookie': `${cookieKey}=${id}; Secure; HttpOnly; SameSite=Lax; Expires=${new Date(resp.endOfLife).toUTCString()}`,
-    'Set-cookie': `loginRedirect=/`
+    // 'Set-cookie': `loginRedirect=/`
   }
 
   return { headers, status: 302 }
@@ -180,9 +199,9 @@ const redirectUrl = state =>
   
   const code = url.searchParams.get('code')
   if (code) {
+    log('exchanging code')
     return exchangeCode(code)
   }
-  console.log(2)
 
   return null
 }
@@ -203,6 +222,7 @@ const verify = async request => {
 
     const { access_token: accessToken, id_token: idToken } = kvStored
     const userInfo = JSON.parse(decodeJWT(idToken))
+    log('acces token', accessToken, decodeJWT(accessToken))
     return { accessToken, idToken, userInfo }
   }
   return {}
@@ -220,8 +240,6 @@ const verify = async request => {
 
  const logout = request => {
   const cookieHeader = request.headers.get('Cookie')
-  if (cookieHeader && cookieHeader.includes(cookieKey)) {
-
     return {
       headers: {
         'Location': `https://${auth0.domain}/v2/logout?client_id=${
@@ -231,8 +249,8 @@ const verify = async request => {
         'Set-cookie': `${cookieKey}=""; HttpOnly; Secure; SameSite=Lax;Path=/;`,
       },
     }
-  }
-  return {}
 }
-return {logout, cookieKey, authorize, handleRedirect}
+return {logout, cookieKey, authorize, handleRedirect, verify}
 }
+const validateToken = ()=>{}
+export {validateToken}
