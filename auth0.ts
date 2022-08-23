@@ -167,7 +167,7 @@ const persistAuth = async (exchange: Response) => {
   const id = btoa(String.fromCharCode.apply(null, digestArray))
   const idSession = SESSION.idFromName(id)
   const obj = SESSION.get(idSession)
-  const resp: <SESSIONInterface> = await obj.fetch('/', {
+  const resp = await obj.fetch('/', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

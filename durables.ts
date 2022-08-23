@@ -13,7 +13,7 @@ interface SESSIONInterface {
   app: Hono
 }
 
-type SESSIONRead = Pick<SESSIONInterface, 'session' | 'created'>)
+type SESSIONRead = Pick<SESSIONInterface, 'session' | 'created' | 'createdDate'>
 
 
 export class State {
@@ -90,13 +90,14 @@ export class Session implements SESSIONInterface  {
       this.state.storage?.put('session', body)
       this.session = body
       console.log('recieved', body)
-      const response: SESSIONRead = {createdDate: this.createdDate, session: this.session}
+      const response: SESSIONRead = {createdDate: this.createdDate, created: this.created, session: this.session}
       return c.json(response)
     })
     this.app.get('/', async (c) => {
       const ok = this.extension(c)
       if (ok){
-        return c.json({session: this.session, created: this.created})
+        const response: SESSIONRead = {createdDate: this.createdDate, created: this.created, session: this.session}
+        return c.json(response)
       } else {
         return c.notFound()
       }
