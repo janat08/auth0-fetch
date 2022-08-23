@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-      "outDir": "./dist",
-      "module": "commonjs",
-      "target": "es2020",
-      "lib": ["es2020"],
-      "preserveConstEnums": true,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "esModuleInterop": true,
-      "types": ["@cloudflare/workers-types"]
-    },
-    "exclude": ["node_modules", "dist"]
-  }
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es2020",
+    "lib": ["es2020"],
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "types": ["@cloudflare/workers-types"]
+  },
+  "exclude": ["node_modules", "dist"]
+}
