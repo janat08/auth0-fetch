@@ -6,13 +6,6 @@ import { Session, State } from "./durables.js";
 export { Session, State };
 import cookie from "cookie";
 const { log } = console;
-// see the readme for more info on what these config options do!
-const config = {
-  // opt into automatic authorization state hydration
-  hydrateState: false,
-  // return responses at the edge
-  originless: false,
-};
 
 export function authorizedCookie(event: Request) {
   const cookieHeader = event.headers.get("Cookie");
